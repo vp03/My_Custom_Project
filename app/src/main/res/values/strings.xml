@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">My Custom Project</string>
+    <string name="hi_user">Hi user!</string>
+</resources>
