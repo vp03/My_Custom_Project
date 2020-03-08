@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">My Custom Project</string>
     <string name="hi_user">Hi user!</string>
+    <string name="start">Start</string>
+    <string name="time" />
+    <string name="click_on_the_following_tile">Click on the following tile:</string>
+    <string name="direction" />
+    <string name="score">Score:</string>
+    <string name="score_val" />
+    <string name="west">West</string>
+    <string name="south">South</string>
+    <string name="east">East</string>
+    <string name="north">North</string>
 </resources>
