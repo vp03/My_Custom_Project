@@ -96,6 +96,7 @@
         android:id="@+id/clickButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#B7F07E"
         android:text="@string/start"
         android:textAllCaps="true"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -137,11 +138,12 @@
         app:layout_constraintTop_toBottomOf="@+id/horz_guideline5" />
 
 
-
     <Button
         android:id="@+id/east"
         android:layout_width="121dp"
         android:layout_height="491dp"
+        android:backgroundTint="#30D5C1"
+        android:onClick="clickede"
         android:text="@string/east"
         android:textAllCaps="true"
         app:layout_constraintBottom_toTopOf="@+id/south_top"
@@ -153,6 +155,8 @@
         android:id="@+id/west"
         android:layout_width="123dp"
         android:layout_height="491dp"
+        android:backgroundTint="#30D5C1"
+        android:onClick="clickedw"
         android:text="@string/west"
         android:textAllCaps="true"
         app:layout_constraintBottom_toTopOf="@+id/south_top"
@@ -164,6 +168,8 @@
         android:id="@+id/south"
         android:layout_width="419dp"
         android:layout_height="128dp"
+        android:backgroundTint="#B7F07E"
+        android:onClick="clickeds"
         android:text="@string/south"
         android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -175,6 +181,8 @@
         android:id="@+id/north"
         android:layout_width="419dp"
         android:layout_height="128dp"
+        android:backgroundTint="#B7F07E"
+        android:onClick="clickedn"
         android:text="@string/north"
         android:textAllCaps="true"
         app:layout_constraintBottom_toTopOf="@id/north_bot"
