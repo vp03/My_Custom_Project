@@ -1,12 +1,18 @@
 package com.pentakotavishu.mycustomproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -18,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     Button start;
     TextView showdir;
     TextView score;
+    TextView high_score;
     Button north;
     Button south;
     Button east;
@@ -25,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     int n;
     String dir;
     int correct=0;
+
+    //note to self: make a field where people can write their name (between time and north)and then make a
+    // class in MainActivity that has their name and their score and then can use GSON
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +45,20 @@ public class MainActivity extends AppCompatActivity {
         time = findViewById(R.id.textView1);
         start = findViewById(R.id.clickButton);
         showdir = findViewById(R.id.textView3);
-        score = findViewById(R.id.textView4);
+        score = findViewById(R.id.textView5);
+        high_score = findViewById(R.id.textView7);
         north = findViewById(R.id.north);
         south = findViewById(R.id.south);
         east = findViewById(R.id.east);
         west = findViewById(R.id.west);
 
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("high", 0);
+        editor.apply();
+
         mediaPlayer.start();
+
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                new CountDownTimer(30000, 1000) {
+                new CountDownTimer(5000, 1000) {
 
 
                     public void onTick(long millisUntilFinished) {
@@ -62,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         south.setEnabled(true);
                         east.setEnabled(true);
                         west.setEnabled(true);
-                        score.setText("" + correct);
+                        score.setText(" " + correct);
                     }
 
                     public void onFinish() {
@@ -71,6 +88,13 @@ public class MainActivity extends AppCompatActivity {
                         south.setEnabled(false);
                         east.setEnabled(false);
                         west.setEnabled(false);
+                        if(correct > sharedPreferences.getInt("high", 0)){
+                            editor.putInt("high", correct);
+                            editor.apply();
+                            Log.i("correct", "" + correct);
+                            Log.i("high_val", "" + sharedPreferences.getInt("high", 0));
+                            high_score.setText(" " + sharedPreferences.getInt("high", 0));
+                        }
                         correct=0;
                     }
                 }.start();
@@ -81,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
         //method
 
     }
+
+
 
     public String assign() {
 
@@ -112,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
     public void clickedn(View view) {
         if(dir == "north") {
             correct=correct+1;
-            score.setText("" + correct);
+            score.setText(" " + correct);
         }
         dir = assign();
         showdir.setText(dir);
@@ -121,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     public void clickede(View view) {
         if(dir == "east") {
             correct=correct+1;
-            score.setText("" + correct);
+            score.setText(" " + correct);
         }
         dir = assign();
         showdir.setText(dir);
@@ -130,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     public void clickeds(View view) {
         if(dir == "south") {
             correct=correct+1;
-            score.setText("" + correct);
+            score.setText(" " + correct);
         }
         dir = assign();
         showdir.setText(dir);
@@ -139,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
     public void clickedw(View view) {
         if(dir == "west") {
             correct=correct+1;
-            score.setText("" + correct);
+            score.setText(" " + correct);
         }
         dir = assign();
         showdir.setText(dir);

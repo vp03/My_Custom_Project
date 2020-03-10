@@ -11,4 +11,6 @@
     <string name="south">South</string>
     <string name="east">East</string>
     <string name="north">North</string>
+    <string name="high_val"></string>
+    <string name="high_score">High Score:</string>
 </resources>
