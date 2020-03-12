@@ -14,12 +14,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText nameText;
+    String name;
     TextView time;
     Button start;
     TextView showdir;
@@ -42,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         MediaPlayer mediaPlayer= MediaPlayer.create(MainActivity.this,R.raw.christmas);
 
+
+
+        nameText = findViewById(R.id.editText1);
         time = findViewById(R.id.textView1);
         start = findViewById(R.id.clickButton);
         showdir = findViewById(R.id.textView3);
@@ -52,10 +60,18 @@ public class MainActivity extends AppCompatActivity {
         east = findViewById(R.id.east);
         west = findViewById(R.id.west);
 
+        name = nameText.getText().toString();
+
+
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("high", 0);
         editor.apply();
+
+        final Gson gson = new Gson();
+
+        final Person person = new Person();
+
 
         mediaPlayer.start();
 
@@ -95,6 +111,11 @@ public class MainActivity extends AppCompatActivity {
                             Log.i("high_val", "" + sharedPreferences.getInt("high", 0));
                             high_score.setText(" " + sharedPreferences.getInt("high", 0));
                         }
+                        name = nameText.getText().toString();
+                        person.setName(name);
+                        person.setScore(correct);
+                        String json = gson.toJson(person);
+                        Log.i("person to json", "" + json);
                         correct=0;
                     }
                 }.start();
@@ -170,4 +191,42 @@ public class MainActivity extends AppCompatActivity {
         dir = assign();
         showdir.setText(dir);
     }
+
+
+
+    public class Person{
+
+        String name;
+        int score;
+
+        public Person(){
+
+        }
+
+        public Person(String s, int score_) {
+            name = s;
+            score = score_;
+        }
+
+        public String getName(){
+            return name;
+
+        }
+
+        public int getScore(){
+            return score;
+
+        }
+
+        public void setName(String s){
+            name = s;
+
+        }
+
+        public void setScore(int score_){
+            score = score_;
+        }
+
+    }
+
 }
