@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     TextView showdir;
     TextView score;
     TextView high_score;
+    TextView high_name;
+    String highest_name = "";
     Button north;
     Button south;
     Button east;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         showdir = findViewById(R.id.textView3);
         score = findViewById(R.id.textView5);
         high_score = findViewById(R.id.textView7);
+        high_name = findViewById(R.id.fragment);
         north = findViewById(R.id.north);
         south = findViewById(R.id.south);
         east = findViewById(R.id.east);
@@ -75,6 +78,14 @@ public class MainActivity extends AppCompatActivity {
 
         mediaPlayer.start();
 
+        final Fragment first = new Highname();
+        findViewById(R.id.fragment).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                high_name.setText(highest_name);
+            }
+        });
+
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                new CountDownTimer(5000, 1000) {
+                new CountDownTimer(15000, 1000) {
 
 
                     public void onTick(long millisUntilFinished) {
@@ -96,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                         east.setEnabled(true);
                         west.setEnabled(true);
                         score.setText(" " + correct);
+                        high_name.setText("Highest Scorer");
                     }
 
                     public void onFinish() {
@@ -104,18 +116,25 @@ public class MainActivity extends AppCompatActivity {
                         south.setEnabled(false);
                         east.setEnabled(false);
                         west.setEnabled(false);
+
+                        name = nameText.getText().toString();
+                        person.setName(name);
+                        person.setScore(correct);
+                        String json = gson.toJson(person);
+                        Log.i("person to json", "" + json);
+
                         if(correct > sharedPreferences.getInt("high", 0)){
                             editor.putInt("high", correct);
                             editor.apply();
                             Log.i("correct", "" + correct);
                             Log.i("high_val", "" + sharedPreferences.getInt("high", 0));
                             high_score.setText(" " + sharedPreferences.getInt("high", 0));
+                            highest_name = name;
+
+
                         }
-                        name = nameText.getText().toString();
-                        person.setName(name);
-                        person.setScore(correct);
-                        String json = gson.toJson(person);
-                        Log.i("person to json", "" + json);
+
+                        high_name.setText("Highest Scorer");
                         correct=0;
                     }
                 }.start();
